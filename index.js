@@ -15,7 +15,7 @@ app.set("views", path.join(__dirname, "views"));
 
 global.database = path.join(__dirname, "./database/data.json");
 
-app.get("/", (req, res) => {
+app.get("/to-do", (req, res) => {
     res.render("toDO_list.pug");
 });
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
