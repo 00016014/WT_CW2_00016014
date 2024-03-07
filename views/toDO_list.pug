@@ -1,0 +1,31 @@
+include head.pug
+.app
+    h4.mb-3 TO-DO App
+    #addNew(data-bs-toggle='modal' data-bs-target='#form')
+        span Add New Task
+        i.fas.fa-plus
+    form#form.modal.fade(tabindex='-1' aria-labelledby='exampleModalLabel' aria-hidden='true')
+        .modal-dialog
+            .modal-content
+                .modal-header
+                h5#exampleModalLabel.modal-title
+                    | Add New Task
+                button.btn-close(type='button' data-bs-dismiss='modal' aria-label='Close')
+            .modal-body
+                p Task Title
+                input#textInput.form-control(type='text' name='')
+                #msg
+                br
+                p Due Date
+                input#dateInput.form-control(type='date' name='')
+                br
+                p Description
+                textarea#textarea.form-control(name='' cols='30' rows='5')
+            .modal-footer
+                button.btn.btn-secondary(type='button' data-bs-dismiss='modal')
+                    | Close
+                button#add.btn.btn-primary(type='submit')
+                    | Add
+        h5.text-center.my-3 Tasks
+        #tasks
+script(src='/javascript/index.js')
