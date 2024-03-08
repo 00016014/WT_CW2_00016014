@@ -4,6 +4,12 @@ const path = require("path");
 const body_parser = require("body-parser");
 const app = express();
 const PORT = 3000;
+global.database = path.join(__dirname, "./database/data.json");
+
+const api_route = require("./routes/api");
+const web_route = require("./routes/web");
+app.use("/api", api_route);
+app.use("/", web_route);
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -13,9 +19,4 @@ app.use("/javascript", express.static("public/javascript"));
 app.set("view engine", "pug");
 app.set("views", path.join(__dirname, "views"));
 
-global.database = path.join(__dirname, "./database/data.json");
-
-app.get("/to-do", (req, res) => {
-    res.render("toDO_list.pug");
-});
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
