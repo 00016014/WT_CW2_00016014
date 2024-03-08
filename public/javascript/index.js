@@ -1,35 +1,29 @@
-
 document.addEventListener("DOMContentLoaded", function () {
     const form = document.querySelector("form");
-    let textInput = document.getElementById("textInput");
-    let dateInput = document.getElementById("dateInput");
-    let textarea = document.getElementById("textarea");
-    let tasks = document.getElementById("tasks");
-    let add = document.getElementById("add");
 
     form.addEventListener("submit", function (e) {
         e.preventDefault();
+        let textInput = document.getElementById("textInput").value;
+        let dateInput = document.getElementById("dateInput").value;
+        let textarea = document.getElementById("textarea").value;
+        let tasks = document.getElementById("tasks");
+        let add = document.getElementById("add");
 
-
-        const taskTitle = textInput.value.trim();
-        const dueDate = dateInput.value;
-        const description = textarea.value.trim();
-
-        if (!taskTitle) {
+        if (!textInput) {
             showError("Task Title can not be empty", form);
             return;
         }
-        if (!dueDate) {
+        if (!dateInput) {
             showError("Please choose date", form);
             return;
         }
-        if (!description) {
+        if (!textarea) {
             showError("Please enter some information", form);
             return;
         }
 
         axios
-            .post("/api/user/to-do", { taskTitle, dueDate, description })
+            .post("/api/user/to-do", { textInput, dateInput, textarea })
             .then(function (response) {
                 alert("Task has been added successfully");
                 location.href = "/user/to-do";
@@ -47,20 +41,16 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
             });
     });
-    
-    let resetForm = () => {
-        textInput.value = "";
-        dateInput.value = "";
-        textarea.value = "";
-    };
 });
 
-
 function showError(message, form) {
-    let msg = document.getElementById("msg");
-    if (message) {
-        msg.innerHTML = message
+    let errorElement = document.getElementById("error");
+    if (!errorElement) {
+        errorElement = document.createElement("div");
+        errorElement.id = "error";
+        errorElement.style.color = "red";
     }
+    errorElement.textContent = message;
 }
 
 

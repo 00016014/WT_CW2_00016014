@@ -30,6 +30,7 @@ const user_service = {
 };
 
 
+
 let writeToFile = async (database) => {
     await fs.writeFileSync(
         global.database,
