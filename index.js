@@ -20,5 +20,4 @@ app.use("/api", api_route);
 app.use("/", web_route);
 
 
-
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

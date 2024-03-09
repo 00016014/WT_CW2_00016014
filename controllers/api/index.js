@@ -1,11 +1,19 @@
 // import specific service class
-const user_service = require("../../services/");
+const task_service = require("../../services/");
 
-const user_controller = {
+const task_controller = {
     // Adding new task
     add_task: async (req, res) => {
         try {
-            const task = await user_service.insert(req);
+            const task = await task_service.insert(req);
+            res.json(task);
+        } catch (error) {
+            res.status(500).json({ error: error.message });
+        }
+    },
+    edit_task: async (req, res) => {
+        try {
+            const task = await task_service.edit_task(req);
             res.json(task);
         } catch (error) {
             res.status(500).json({ error: error.message });
@@ -13,4 +21,4 @@ const user_controller = {
     },
 };
 
-module.exports = user_controller;
+module.exports = task_controller;

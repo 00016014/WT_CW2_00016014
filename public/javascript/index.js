@@ -23,10 +23,10 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         axios
-            .post("/api/user/to-do", { textInput, dateInput, textarea })
+            .post("/api/task/to-do", { textInput, dateInput, textarea })
             .then(function (response) {
                 alert("Task has been added successfully");
-                location.href = "/user/to-do";
+                location.href = "/task/to-do";
             })
             .catch(function (error) {
                 if (error.response && error.response.data) {
@@ -52,5 +52,3 @@ function showError(message, form) {
     }
     errorElement.textContent = message;
 }
-
-

@@ -1,7 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const user_controller = require('../../../controllers/web');
+const task_controller = require('../../../controllers/web');
 
-router.get('/to-do', user_controller.add_task);
+router.get('/to-do', task_controller.read_tasks);
+router.get('/delete/:id', task_controller.delete_task)
 
 module.exports = router;

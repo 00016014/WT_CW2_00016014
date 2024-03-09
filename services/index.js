@@ -2,14 +2,14 @@ const fs = require("fs");
 const database = require(global.database);
 
 // write service method implementations
-const user_service = {
+const task_service = {
     get(req, res) {
         return database;
     },
     insert(req, res) {
-
+        let new_id = genRandId(7);
         const body = req.body;
-        console.log(body)
+        console.log(body);
 
         const toDO_list = {
             textInput: body.textInput,
@@ -18,17 +18,52 @@ const user_service = {
         };
 
         database.unshift({
+            id: new_id,
             task: toDO_list,
         });
 
         writeToFile(database);
 
         return {
+            id: new_id,
             task: toDO_list,
         };
     },
-};
 
+    update(req, res) {
+        const id= req.params.id;
+        const body = req.body;
+
+        const index = database.findIndex((item) => item.id === id);
+
+        if (index !== -1) {
+            database[index].task.textInput = body.textInput;
+            database[index].task.dateInput = body.dateInput;
+            database[index].task.textarea = body.textarea;
+
+            writeToFile(database);
+
+            return database[index];
+        } else {
+            return null; // Task with given ID not found
+        }
+    },
+    delete(req, res) {
+        const id = req.params.id;
+
+        const index = database.findIndex((item) => item.id === id);
+
+        if (index !== -1) {
+            const deletedTask = database.splice(index, 1)[0];
+
+            writeToFile(database);
+
+            return deletedTask;
+        } else {
+            return null; // Task with given ID not found
+        }
+    }
+};
 
 
 let writeToFile = async (database) => {
@@ -39,4 +74,17 @@ let writeToFile = async (database) => {
     );
 };
 
-module.exports = user_service;
+let genRandId = (count) => {
+    let result = "";
+    const characters =
+        "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    const charactersLength = characters.length;
+    for (let i = 0; i < count; i++) {
+        result += characters.charAt(
+            Math.floor(Math.random() * charactersLength)
+        );
+    }
+    return result;
+};
+
+module.exports = task_service;
