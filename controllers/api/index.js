@@ -13,7 +13,7 @@ const task_controller = {
     },
     edit_task: async (req, res) => {
         try {
-            const task = await task_service.edit_task(req);
+            const task = await task_service.update(req);
             res.json(task);
         } catch (error) {
             res.status(500).json({ error: error.message });

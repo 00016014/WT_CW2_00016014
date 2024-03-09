@@ -11,7 +11,7 @@ const task_service = {
         const body = req.body;
         console.log(body);
 
-        const toDO_list = {
+        const task = {
             textInput: body.textInput,
             dateInput: body.dateInput,
             textarea: body.textarea,
@@ -19,21 +19,21 @@ const task_service = {
 
         database.unshift({
             id: new_id,
-            task: toDO_list,
+            task: task,
         });
 
         writeToFile(database);
 
         return {
             id: new_id,
-            task: toDO_list,
+            task: task,
         };
     },
 
     update(req, res) {
-        const id= req.params.id;
+        const id = req.params.id;
         const body = req.body;
-
+        console.log(id);
         const index = database.findIndex((item) => item.id === id);
 
         if (index !== -1) {
@@ -48,23 +48,7 @@ const task_service = {
             return null; // Task with given ID not found
         }
     },
-    delete(req, res) {
-        const id = req.params.id;
-
-        const index = database.findIndex((item) => item.id === id);
-
-        if (index !== -1) {
-            const deletedTask = database.splice(index, 1)[0];
-
-            writeToFile(database);
-
-            return deletedTask;
-        } else {
-            return null; // Task with given ID not found
-        }
-    }
 };
-
 
 let writeToFile = async (database) => {
     await fs.writeFileSync(

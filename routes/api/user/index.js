@@ -12,7 +12,7 @@ router.post("/to-do", registerValidationRules(), (req, res) => {
     task_controller.add_task(req, res);
 });
 
-router.post("/to-do/:id", registerValidationRules(), (req, res) => {
+router.post("/edit/:id", registerValidationRules(), (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
         return res.status(400).json({ errors: errors.array() });

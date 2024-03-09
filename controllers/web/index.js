@@ -1,5 +1,4 @@
 const fs = require("fs");
-
 const task_controller = {
     read_tasks: async (req, res) => {
         database_path = "./database/data.json";
@@ -24,8 +23,8 @@ const task_controller = {
     },
 
     edit_task: async (req, res) => {
-        database_path = "./database/data.json";
         const id = req.params.id;
+        database_path = "./database/data.json";
         fs.readFile(database_path, "utf8", (error, database) => {
             if (error) {
                 console.error(error);
@@ -34,11 +33,11 @@ const task_controller = {
 
             try {
                 const tasks = JSON.parse(database);
-                const task = tasks.find((task) => task.id === parseInt(id));
+                const task = tasks.find((task) => task.id === id);
                 if (!task) {
                     return res.status(404).send("Task not found");
                 }
-                res.render("toDO_list.pug", { task });
+                res.render("edit_task.pug", { task });
             } catch (error) {
                 console.error(error);
                 res.status(500).send("Error parsing JSON data");
